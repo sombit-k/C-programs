@@ -1,0 +1,38 @@
+Algorithm for Coin Change with Finite Sequence:
+
+1. Function `coinChange(coins, coinsSize, amount, used)`:
+   a. If `amount == 0`: 
+      - Allocate `result[1]`
+      - `result[0] = 0`
+      - Return `result`
+   b. If `amount < 0`: 
+      - Return NULL
+   c. Initialize `shortestCombination = NULL`
+   d. For `i = 0` to `coinsSize - 1`:
+      - If `used[i] > 0`: Continue
+      - `remainder = amount - coins[i]`
+      - `used[i] = 1`
+      - `remainder_res = coinChange(coins, coinsSize, remainder, used)`
+      - `used[i] = 0`
+      - If `remainder_res != NULL`:
+         - `res_length = 0`
+         - While `remainder_res[res_length] != 0`: `res_length++`
+         - Allocate `result[res_length + 2]`
+         - For `j = 0` to `res_length - 1`: `result[j] = remainder_res[j]`
+         - `result[res_length] = coins[i]`
+         - `result[res_length + 1] = 0`
+         - Free `remainder_res`
+         - Return `result`
+   e. Return NULL
+
+2. Main Function:
+   a. Read `coinsSize`
+   b. Read `coins[coinsSize]`
+   c. Read `amount`
+   d. Initialize `used[100] = {0}`
+   e. `result = coinChange(coins, coinsSize, amount, used)`
+   f. If `result != NULL`:
+      - Print `result[i]` for `i = 0` to `result[i] != 0`
+      - Free `result`
+   g. Else:
+      - Print "No solution"
